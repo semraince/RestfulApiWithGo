@@ -2,6 +2,7 @@ package pairs
 
 import (
 	"GoDatabaseAssignment/httpUtil"
+	"fmt"
 	"net/http"
 )
 
@@ -21,6 +22,11 @@ func KeyValuePairs(w http.ResponseWriter, r *http.Request) {
 func getKeyValuePair(w http.ResponseWriter, r *http.Request) {
 	key := httpUtil.GetQueryParam(r, "key")
 	result, err := GetKeyValuePair(key)
+	if err != nil {
+		httpUtil.GenerateResponse(w, r, nil, createError(err))
+		return
+	}
+
 	httpUtil.GenerateResponse(w, r, err, result)
 }
 
@@ -33,8 +39,13 @@ func saveKeyValuePair(w http.ResponseWriter, r *http.Request) {
 	}
 	result, err := SavePair(data)
 	if err != nil {
-		httpUtil.GenerateResponse(w, r, err, nil)
+		httpUtil.GenerateResponse(w, r, nil, createError(err))
 		return
 	}
-	httpUtil.GenerateResponse(w, r, err, result)
+	httpUtil.GenerateResponse(w, r, nil, result)
+}
+
+func createError(err error) ErrorMessage {
+	errorMessage := ErrorMessage{Message: fmt.Sprint(err)}
+	return errorMessage
 }

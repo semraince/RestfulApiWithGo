@@ -6,12 +6,17 @@ import (
 )
 
 const (
-	DBERROR = "An Error Occured!"
+	DBERROR     = "An Error Occured!"
+	KEYNOTFOUND = "Key Not Found"
 )
 
 type KeyValue struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
+}
+
+type ErrorMessage struct {
+	Message string `json:"message"`
 }
 
 func GetKeyValuePair(key string) (KeyValue, error) {
@@ -21,7 +26,7 @@ func GetKeyValuePair(key string) (KeyValue, error) {
 		return pairResponse, errors.New(DBERROR)
 	}
 	if result == nil {
-		return pairResponse, nil
+		return pairResponse, errors.New(KEYNOTFOUND)
 	}
 	pairResponse = KeyValue{
 		Key:   result.Key,
