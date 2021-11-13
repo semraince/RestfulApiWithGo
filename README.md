@@ -4,7 +4,7 @@
 2. in-memory(POST) create key value pair in-memory
 3. in-memory/:key (GET) key valeu pair from in-memory
 
-# Set-Up
+## Setup
 
 1. git clone https://github.com/semraince/RestfulApiWithGo.git
 2. cd RestfulApiWithGo
@@ -12,7 +12,7 @@
 
 Default port is 9090, it can be changed from conf.yaml
 
-# Heroku End-Points
+## Heroku End-Points
 
 Postman request examples can be found in GoDatabaseAssignment.postman_collection.json file
 
@@ -63,7 +63,7 @@ https://sleepy-hollows-06250.herokuapp.com/records
 | Status | Response                           |
 | ------ | ---------------------------------- |
 | 502    | `{ "msg": "Db Error Has Occured"}` |
-| 503    | `{ "message": "Date Parse Error"}` |
+| 503    | `{ "msg": "Date Parse Error"}`     |
 
 ### InMemory Db
 
