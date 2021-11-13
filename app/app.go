@@ -6,6 +6,7 @@ import (
 	"GoDatabaseAssignment/records"
 	"log"
 	"net/http"
+	"os"
 )
 
 /*var routes = []route{
@@ -48,6 +49,10 @@ func Serve(w http.ResponseWriter, r *http.Request) {
 
 func Init() {
 	addr := config.Get().Servers.AppServer
+	envPort := os.Getenv("PORT")
+	if envPort != "" {
+		addr = ":" + envPort
+	}
 	log.Printf("App Address : %s", addr)
 
 	http.HandleFunc("/records", records.Records)
