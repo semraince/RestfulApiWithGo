@@ -20,7 +20,7 @@ func Init() {
 	log.Printf("App Address : %s", addr)
 
 	http.HandleFunc("/records", records.Records)
-	http.HandleFunc("/config", pairs.KeyValuePairs)
+	http.HandleFunc("/in-memory", pairs.KeyValuePairs)
 	http.ListenAndServe(addr, nil)
 
 }

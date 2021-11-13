@@ -58,3 +58,14 @@ func Read(key string) (*KeyValue, error) {
 	}
 	return itrx.(*KeyValue), nil
 }
+
+func Delete(pair *KeyValue) error {
+	transact := inMemDb.Txn(true)
+	if err := transact.Delete("keyvalue", pair); err != nil {
+		transact.Abort()
+		return err
+	}
+	transact.Commit()
+	return nil
+
+}

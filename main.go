@@ -2,14 +2,10 @@ package main
 
 import (
 	"GoDatabaseAssignment/app"
-	"GoDatabaseAssignment/config"
-	"GoDatabaseAssignment/inmemory"
+	"GoDatabaseAssignment/starter"
 )
 
 func main() {
-	config.Load()
-	inmemory.Init()
-	inmemory.Init()
+	starter.Init()
 	app.Init()
-
 }

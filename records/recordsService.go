@@ -7,10 +7,28 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+const (
+	SuccessCode      = 0
+	SuccessMessage   = "Success"
+	FailureCode      = 502
+	FailureMessage   = "Db Error Has Occured"
+	DateParseCode    = 503
+	DateParseMessage = "Date Parse Error"
+)
+
 func GetRecords(data RequestRecord) RecordResponse {
-	startDateParsed := utils.ParseDate(data.StartDate)
-	endDateParsed := utils.ParseDate(data.EndDate)
 	var searchList []RecordDto
+	var response RecordResponse
+	var recordResults []*Record
+
+	startDateParsed, err := utils.ParseDate(data.StartDate)
+	if err != nil {
+		return generateResponse(DateParseCode, DateParseMessage, recordResults)
+	}
+	endDateParsed, err := utils.ParseDate(data.EndDate)
+	if err != nil {
+		return generateResponse(DateParseCode, DateParseMessage, recordResults)
+	}
 
 	pipeline := mongo.Pipeline{
 		{
@@ -38,12 +56,13 @@ func GetRecords(data RequestRecord) RecordResponse {
 			}},
 		},
 	}
-	var response RecordResponse
-	database.Aggregate("records", pipeline, &searchList)
+	err = database.Aggregate("records", pipeline, &searchList)
+	if err != nil {
+		return generateResponse(FailureCode, FailureMessage, recordResults)
+	}
 	if searchList == nil {
 		return response
 	}
-	var recordResults []*Record
 	for _, r := range searchList {
 		recordResults = append(recordResults, &Record{
 			Key:        r.Key,
@@ -51,11 +70,15 @@ func GetRecords(data RequestRecord) RecordResponse {
 			CreatedAt:  r.CreatedAt,
 		})
 	}
-	response = RecordResponse{
-		Code: 0,
-		Msg:  "success",
+	return generateResponse(SuccessCode, SuccessMessage, recordResults)
+
+}
+
+func generateResponse(code int, message string, recordResults []*Record) RecordResponse {
+	response := RecordResponse{
+		Code: code,
+		Msg:  message,
 		Data: map[string]interface{}{"records": recordResults},
 	}
-
 	return response
 }

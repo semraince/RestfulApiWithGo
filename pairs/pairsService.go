@@ -5,6 +5,10 @@ import (
 	"errors"
 )
 
+const (
+	DBERROR = "An Error Occured!"
+)
+
 type KeyValue struct {
 	Key   string `json:"key"`
 	Value string `json:"value"`
@@ -14,7 +18,7 @@ func GetKeyValuePair(key string) (KeyValue, error) {
 	var pairResponse KeyValue
 	result, err := inmemory.Read(key)
 	if err != nil {
-		return pairResponse, errors.New("An Error Occured")
+		return pairResponse, errors.New(DBERROR)
 	}
 	if result == nil {
 		return pairResponse, nil
@@ -23,14 +27,17 @@ func GetKeyValuePair(key string) (KeyValue, error) {
 		Key:   result.Key,
 		Value: result.Value,
 	}
-	return pairResponse, err
+	return pairResponse, nil
 }
 
-func savePair(data KeyValue) error {
+func SavePair(data KeyValue) (KeyValue, error) {
 	pair := inmemory.KeyValue{
 		Key:   data.Key,
 		Value: data.Value,
 	}
 	err := inmemory.Write(&pair)
-	return err
+	if err != nil {
+		return data, err
+	}
+	return data, nil
 }

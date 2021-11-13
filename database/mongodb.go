@@ -3,7 +3,6 @@ package database
 import (
 	"GoDatabaseAssignment/config"
 	"context"
-	//"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
@@ -24,16 +23,17 @@ func Init() error {
 	return nil
 }
 
-func Aggregate(collection string, filter interface{}, results interface{}) {
+func Aggregate(collection string, filter interface{}, results interface{}) error {
 	cursor, err := db.Collection(collection).Aggregate(context.TODO(), filter)
 	if nil != err {
 		log.Printf("DB Aggregate error %v\n", err)
-		return
+		return err
 	}
 
 	err = cursor.All(context.TODO(), results)
 	if nil != err {
 		log.Printf("DB Aggregate error %v\n", err)
-		return
+		return err
 	}
+	return nil
 }
