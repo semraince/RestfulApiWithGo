@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "0260656e-4f1a-45ac-aab5-1b2c869291d4",
+		"name": "GoDatabaseAssignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "mongodb",
+			"item": [
+				{
+					"name": "https://sleepy-hollows-06250.herokuapp.com/records",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n    \"startDate\": \"2016-01-26\",\n    \"endDate\": \"2018-02-02\",\n    \"minCount\": 2700,\n    \"maxCount\": 3000\n   \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sleepy-hollows-06250.herokuapp.com/records",
+							"protocol": "https",
+							"host": [
+								"sleepy-hollows-06250",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"records"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "inmemorydb",
+			"item": [
+				{
+					"name": "https://sleepy-hollows-06250.herokuapp.com/in-memory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key\" : \"semra\",\n    \"value\" : \"ince\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sleepy-hollows-06250.herokuapp.com/in-memory",
+							"protocol": "https",
+							"host": [
+								"sleepy-hollows-06250",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"in-memory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://sleepy-hollows-06250.herokuapp.com/in-memory?key=semra",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://sleepy-hollows-06250.herokuapp.com/in-memory?key=semra",
+							"protocol": "https",
+							"host": [
+								"sleepy-hollows-06250",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"in-memory"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "semra"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
